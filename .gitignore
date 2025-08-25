@@ -54,3 +54,6 @@ dkms.conf
 # debug information files
 *.dwo
 CLAUDE.md
+main_backup.c
+usbx
+src/uthash.h
