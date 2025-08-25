@@ -33,7 +33,9 @@
     #include "uthash.h"
 #endif
 
+#ifdef USE_DEPS
 #include <libusb-1.0/libusb.h>
+#endif
 
 /**
  * @struct device_handle
@@ -49,7 +51,9 @@ struct device_handle {
 };
 
 /** @brief Global libusb context for USB operations */
+#ifdef USE_DEPS
 libusb_context *ctx = NULL;
+#endif
 
 /**
  * @brief Main entry point for the usbX microservice
@@ -97,6 +101,7 @@ int main(void) {
     free(handle);
     
     // TDD libusb initialization with proper error handling
+#ifdef USE_DEPS
     printf("Initializing libusb...\n");
     int result = libusb_init(&ctx);
     
@@ -112,5 +117,9 @@ int main(void) {
     
     // Cleanup and exit with success
     libusb_exit(ctx);
+#else
+    printf("✓ Minimal build mode - libusb functionality not available\n");
+    printf("usbX service ready! (minimal mode)\n");
+#endif
     return EXIT_SUCCESS;
 }

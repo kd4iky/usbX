@@ -95,6 +95,11 @@ install: $(TARGET)
 test: test-build test-uthash test-libusb test-libusb-functionality
 	@echo "All tests completed successfully!"
 
+# Comprehensive build system tests
+test-build-comprehensive:
+	@echo "Running comprehensive build system tests..."
+	@test/run_all_build_tests.sh
+
 test-build:
 	@echo "Running build tests..."
 	@test/test_build.sh
@@ -130,6 +135,7 @@ help:
 	@echo "  run        - Build and run the executable"
 	@echo "  test       - Run all tests"
 	@echo "  test-build - Run build system tests"
+	@echo "  test-build-comprehensive - Run comprehensive build system tests"
 	@echo "  test-uthash- Run uthash integration tests"
 	@echo "  test-libusb- Run libusb initialization tests"
 	@echo "  test-libusb-functionality - Run libusb functionality tests"
@@ -139,4 +145,4 @@ help:
 	@echo "  help       - Show this help message"
 
 # Declare phony targets
-.PHONY: all clean run install help check-deps test test-build test-uthash test-libusb test-libusb-functionality docs
+.PHONY: all clean run install help check-deps test test-build test-build-comprehensive test-uthash test-libusb test-libusb-functionality docs
