@@ -58,6 +58,49 @@ You are a TDD expert implementing the `add_handle` function for the `usbX` micro
 
 ---
 
+You are a test-driven development (TDD) expert tasked with generating additional test cases for the project directory and Makefile setup of the `usbX` microservice, building on a completed and passing implementation. The existing setup includes a directory structure with `src/main.c` and a `Makefile` that compiles using `gcc`, links `libusb-1.0`, `libmicrohttpd`, `json-c`, and `pthread`, and supports `make`, `make clean`, and `make run` targets. The original test (a shell script) verified that `make` compiles an empty `src/main.c` into the `usbx` executable without errors. Your task is to critically analyze the setup requirements and generate additional test cases, including edge cases, to ensure robustness. Focus on the smallest testable units, such as dependency handling, error cases, and target behaviors.
+
+### Steps to Follow:
+1. **Analyze the Requirement**:
+   - Review the need for a project directory (`usbX` with `src/main.c`) and a `Makefile` that uses `pkg-config` for library flags, compiles `main.c`, links required libraries, and supports `clean` and `run` targets.
+   - Identify edge cases, such as missing dependencies (e.g., `libusb-1.0` not installed), invalid source files (e.g., syntax errors in `main.c`), missing `src/` directory, and incorrect `pkg-config` output.
+   - Consider additional scenarios, such as verifying `make clean` removes artifacts, `make run` executes the binary, and handling spaces or special characters in paths.
+
+2. **Generate Test Cases**:
+   - Write at least five new test cases, including:
+     - **Dependency Failure**: Test compilation failure when a required library (e.g., `libusb-1.0`) is missing.
+     - **Invalid Source File**: Test compilation failure when `main.c` contains a syntax error.
+     - **Missing src Directory**: Test `make` failure when `src/` or `main.c` is missing.
+     - **Clean Target**: Verify `make clean` removes object files and the executable.
+     - **Run Target**: Verify `make run` builds and executes `usbx` successfully.
+     - **Edge Case - Special Characters**: Test compilation with a project path containing spaces or special characters.
+   - For each test case, create a shell script (or equivalent) that sets up the scenario, runs `make` (or the relevant target), and checks the expected outcome (e.g., exit codes, file presence, or error messages).
+   - Ensure tests are independent, automated, and produce clear pass/fail results.
+
+3. **Verify Existing Implementation**:
+   - Assume the existing `Makefile` and `src/main.c` are minimal (e.g., empty `main.c` with `int main() { return 0; }` and a `Makefile` using `pkg-config` for libraries). Test whether these handle the new cases correctly or require updates.
+   - If the implementation needs changes to pass new tests (e.g., better error messages or dependency checks), note the required modifications but do not implement them (focus on test generation).
+
+4. **Output Format**:
+   - Provide each test case in a clear, structured format:
+     - **Test Case Name**: Descriptive name (e.g., "Test Missing Library Dependency").
+     - **Description**: What the test verifies and why it’s important (including edge case rationale).
+     - **Test Code**: Shell script (or equivalent) that sets up the scenario, runs the test, and checks the result.
+     - **Expected Outcome**: What constitutes a pass (e.g., specific error message, file absence).
+     - **Edge Case Notes**: Why this tests an edge case or critical scenario.
+   - Summarize any potential changes needed in the `Makefile` or `main.c` to pass the new tests, but do not modify the code unless explicitly required.
+   - Include a brief section on refactoring considerations (e.g., adding dependency checks in the `Makefile` or improving error messages).
+
+5. **Constraints**:
+   - Tests must be automatable and runnable on a Linux system (e.g., Ubuntu 22.04).
+   - Assume dependencies (`libusb-1.0`, `libmicrohttpd`, `json-c`, `pthread`) are normally installed but can be mocked or removed for edge cases.
+   - Use standard tools like `bash`, `make`, `gcc`, and `pkg-config` for tests.
+   - Ensure tests align with the TDD principle of defining expected behavior before implementation changes.
+
+Output the test cases, expected outcomes, edge case notes, and refactoring considerations in a clear, structured format. If the existing implementation (from step1.md and step2.md) is likely to fail any test, note the expected failure and suggest minimal changes without implementing them.
+
+---
+
 #### Step 6: Implement find_handle Function
 **Requirement**: Implement a thread-safe `find_handle` function to retrieve a `HandleEntry` by ID from the hash map.
 
